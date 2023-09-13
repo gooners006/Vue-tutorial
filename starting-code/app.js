@@ -8,9 +8,10 @@ const app = Vue.createApp({
   },
   methods: {
     outputGoals() {
-      const randomNumber = Math.random();
-
-      return randomNumber < 0.5 ? this.courseGoalA : this.courseGoalB;
+      return Math.random() < 0.5 ? this.courseGoalA : this.courseGoalB;
+    },
+    outputHtml() {
+      return "<h1>This is a h1 tag</h1>";
     },
   },
 });
