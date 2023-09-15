@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Monster Slayer</h1>
+    </header>
+    <div id="game">
+      <section id="monster" class="container">
+        <h2>Monster Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" :style="monsterHealthBarWidth"></div>
+        </div>
+      </section>
+      <section id="player" class="container">
+        <h2>Your Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" :style="playerHealthBarWidth"></div>
+        </div>
+      </section>
+      <section id="controls" v-if="!result">
+        <button @click="attack">
+          <p>ATTACK</p>
+          <p>Ol' Reliable</p>
+        </button>
+        <button @click="specialAttack" :disabled="disableSpecialAttack">
+          <p>SPECIAL ATTACK</p>
+          <p v-if="disableSpecialAttack">Cooldown: {{specialAttackCooldown}}</p>
+          <p v-else>Smite him!</p>
+        </button>
+        <button @click="heal" :disabled="disableHeal">
+          <p>HEAL</p>
+          <p v-if="disableHeal">Cooldown: {{healCooldown}}</p>
+          <p v-else>Here, have a potion!</p>
+        </button>
+        <button @click="surrender">
+          <p v-if="showSurrenderConfirmation">
+            Are you sure? Click again to confirm, otherwise keep playing.
+          </p>
+          <div v-else>
+            <p>SURRENDER</p>
+            <p>Nooo! You're our only hope!</p>
+          </div>
+        </button>
+      </section>
+      <section id="game-over" v-else>
+        <h2>Game Over!</h2>
+        <h3>{{gameOverText}}</h3>
+        <button @click="restartGame">Restart Game</button>
+      </section>
+      <section id="log" class="container">
+        <h2>Battle Log</h2>
+        <ul>
+          <li v-for="(item, index) in battleLog" :key="index">
+            <span :class="item.className[0]">{{item.who}}&nbsp;</span>
+            <span>{{item.what}}</span>
+            <span v-if="item.value">
+              &nbsp;for
+              <span :class="item.className?.[1]">{{item.value}}</span>
+            </span>
+            <span>.</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
